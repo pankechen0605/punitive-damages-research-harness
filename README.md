@@ -182,6 +182,7 @@ punitive-damages-research/
 - framework 层说明见 [docs/framework-layer-guide.md](docs/framework-layer-guide.md)。
 - synthesis 与 output 区分见 [docs/synthesis-output-guide.md](docs/synthesis-output-guide.md)。
 - 材料生命周期见 [docs/source-lifecycle.md](docs/source-lifecycle.md)。
+- 增量案例进入流程见 [docs/incremental-case-intake-workflow.md](docs/incremental-case-intake-workflow.md)。
 - 人工核验清单见 [docs/human-review-checkpoints.md](docs/human-review-checkpoints.md)。
 - 第 9 步 synthesis 人工审查流程见 [docs/synthesis-human-review-workflow.md](docs/synthesis-human-review-workflow.md)。
 - claim 层级与升格规则见 [docs/claim-taxonomy-and-elevation-rules.md](docs/claim-taxonomy-and-elevation-rules.md)。

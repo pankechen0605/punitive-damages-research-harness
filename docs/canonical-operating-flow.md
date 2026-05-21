@@ -181,6 +181,27 @@ case card 必须：
 - 把普通案例写成规则锚点
 - 把 case card 写成 final doc
 
+### Incremental Case Intake
+
+framework v1 lock 或 synthesis 形成后新增的案例，不能直接进入批量样本或 final conclusions。
+
+新增案例必须走：
+
+```text
+case submission
+→ intake review
+→ raw source preservation
+→ case card generation
+→ human verification
+→ comparison delta
+→ synthesis impact review
+→ human decision
+```
+
+详见 `docs/incremental-case-intake-workflow.md`。
+
+新增案例不得直接修改 framework lock、rule summary、final_doc 或 output documents。
+
 ## 8. Horizontal Comparison：3_synthesis/cross_case_comparison
 
 case cards 形成后，才进入横向比较。
@@ -283,6 +304,8 @@ AI 可以整理、归类、比对、提示风险，但不能独立把 observatio
 - 没有观察要素，不生成主题 case card 字段。
 - 没有 pilot，不锁定权重。
 - 没有 framework v1，不批量跑 case cards。
+- 新增案例没有 intake review，不进入 case cards。
+- 新增案例没有 synthesis delta review，不修改 synthesis。
 - 没有 case cards，不做横向比较。
 - 没有横向比较，不进入 synthesis human review。
 - 没有 human sign-off，不写最终法律结论。

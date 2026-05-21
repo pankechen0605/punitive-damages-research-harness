@@ -76,6 +76,7 @@
 - 将单篇论文整理成 paper card
 - 将 NotebookLM 的中间输出暂存到 `notebook_outputs`
 - 标记遗漏、矛盾、待核验项
+- 对增量新增案例，在 intake review 和 raw source preservation 后生成 draft case card
 
 ### 输出
 
@@ -91,6 +92,7 @@
 - 不能把论文观点写成法院规则
 - 不能将一个案例的事实直接推广为法律结论
 - 不能补充原材料没有的信息
+- 不能让组员提交案例绕过 intake review 直接进入 case cards
 
 ### 进入下一层的条件
 
@@ -189,6 +191,7 @@
 - 通过 human-in-the-loop synthesis 形成 rule summary
 - 形成 final analytical document / 文档版 pre 材料
 - 标记尚不足以支持结论的问题
+- 对新增 verified case card 进行 comparison delta 和 synthesis impact assessment
 
 ### 输出
 
@@ -202,6 +205,7 @@
 - 不能无来源形成法律结论
 - 不能忽略反例或不支持案例
 - 不能把展示语言替代研究判断
+- 不能让新增案例直接修改 rule summary 或 final_doc，必须先经过 synthesis delta review 和 human decision
 
 ### 进入下一层的条件
 
@@ -254,6 +258,7 @@
 - 不能新增未经 `3_synthesis` 支撑的实质判断
 - 不能强化、弱化或改写 `3_synthesis` 的法律结论
 - 不能反向污染 `3_synthesis`
+- 不能在 synthesis-layer review 完成前，为新增案例更新 output documents
 - 不能把比较法引入扩展成新的主线，除非人工明确调整范围
 
 ### 进入下一层的条件
