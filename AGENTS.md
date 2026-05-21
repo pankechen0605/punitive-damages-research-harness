@@ -42,7 +42,8 @@ activate topic config
 → pilot 试跑
 → framework v1 lock
 → 批量 case cards
-→ 3_synthesis 横向比较和规则总结
+→ 3_synthesis/cross_case_comparison 横向比较
+→ 3_synthesis/rule_summary + final_doc human-in-the-loop 规则总结 / 最终分析文档
 → 4_output 展示适配
 ```
 

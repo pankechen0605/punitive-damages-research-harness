@@ -1,32 +1,40 @@
-# 惩罚性损害赔偿实务判例梳理：文档版材料
+# Final Synthesis Report：{{topic_name}}
 
-## 一、问题意识
+> 本模板属于 `3_synthesis/final_doc`。它只能组装 human-confirmed synthesis 内容，不得新增、强化或弱化法律结论。
 
-法院为什么、何时会突破填平原则，支持惩罚性赔偿？
+## 一、Research Scope and Evidence Base
 
-## 二、规范地图
+- Topic Config：
+- Evidence Manifest：
+- Framework Version：
+- Human Legal Judgment Memo：
 
-区分：
-- 民法典侵权责任编内部的惩罚性赔偿
-- 消费者法、食品安全法、药品管理法等特别法上的惩罚性赔偿
-- 司法解释、指导案例、典型案例的规则锚点
+## 二、Case Observations
 
-## 三、学术争议地图
+只记录可回溯到 case cards 的观察，不写最终法律结论。
 
-来自 CSSCI 文献层。
+## 三、Tentative Patterns
 
-## 四、案例摘要
+写明样本范围、支持材料、反向材料和待核验事项。
 
-放 5-8 个案例卡压缩版。
+## 四、Rule Anchors
 
-## 五、横向比较
+列出可回溯到 rule cards 或 authoritative rule anchors 的规范支撑，并说明适用范围。
 
-支持与不支持惩罚性赔偿的因素比较。
+## 五、Human-Confirmed Legal Conclusions
 
-## 六、裁判规则总结
+只放经过 human sign-off 的 final legal conclusions。
 
-法院实际关注哪些因素。
+| Conclusion ID | Conclusion | Basis | Scope Limitation | Human Sign-off |
+|---|---|---|---|---|
+| | | | | |
 
-## 七、PPT 素材提纲
+## 六、Limitations and Pending Verification
 
-只提供页面标题、核心观点和可用案例，不制作 PPT。
+-
+
+## 七、Traceability Appendix
+
+| Claim / Conclusion ID | Source Cards | Rule Anchors | Review Status |
+|---|---|---|---|
+| | | | |

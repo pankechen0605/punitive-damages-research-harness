@@ -162,9 +162,11 @@ punitive-damages-research/
         ↓
 7. 批量生成 case cards
         ↓
-8. 3_synthesis 做横向比较和规则总结
+8. 3_synthesis/cross_case_comparison 做横向比较
         ↓
-9. 4_output 做展示适配
+9. 3_synthesis/rule_summary + final_doc 做 human-in-the-loop 规则总结 / 最终分析文档
+        ↓
+10. 4_output 做展示适配
 ```
 
 ---

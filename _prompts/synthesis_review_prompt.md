@@ -1,32 +1,22 @@
-# 综合材料审稿 Prompt
+# Synthesis Review Prompt
 
 ## 目标
 
-检查最终文档版 pre 材料是否存在以下问题。
+检查 synthesis draft / final_doc 草稿是否遵守 human-in-the-loop synthesis 规则。
+
+只使用提供的材料，不得搜索、补充或编造案例、法条、论文、法院观点或法律结论。
 
 ## 检查清单
 
-### 1. 规范、案例、论文观点是否区分清楚
-- 文档中是否混淆了法律条文、法院裁判和学术观点？
-- 学术观点是否被当作法律依据使用？
-
-### 2. 侵权责任编与特别法是否区分
-- 是否把适用消费者法、食品安全法的案例说成适用侵权责任编？
-- 规范地图是否清楚区分了不同法律渊源？
-
-### 3. 是否从少量案例过度概括
-- 裁判规则总结是否有足够的案例支撑？
-- 是否从 1-2 个案例就得出了普遍性结论？
-- 横向比较表中的案例数量是否足够？
-
-### 4. 横向比较表是否能支撑裁判规则总结
-- 裁判规则总结中的每一条规则，是否在横向比较表中有对应案例？
-- 是否有规则没有案例支撑？
-
-### 5. PPT 素材提纲是否空泛
-- 每页 PPT 是否有具体的案例支撑？
-- 是否变成了"惩罚性赔偿很重要"这样的空泛口号？
-- 是否有可用的案例编号、法条引用？
+- 是否只使用 provided materials？
+- 是否区分 case observation / tentative pattern / rule anchor / final legal conclusion？
+- 是否每个 claim 都能回溯到 case cards / rule cards / paper cards？
+- 是否把论文观点写成 court rule？
+- 是否把 ordinary case 单独当作 rule anchor？
+- 是否从少量案例过度概括？
+- 是否标记不确定内容为“待核验”？
+- 是否存在没有 human sign-off 的 final legal conclusion？
+- 是否存在 output-layer language 强化 synthesis-layer conclusion？
 
 ## 输出格式
 

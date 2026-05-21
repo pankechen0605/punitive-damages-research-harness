@@ -2,7 +2,7 @@
 
 ## 二者的区别
 
-`3_synthesis` 是研究综合层，负责横向比较和规则总结。
+`3_synthesis` 是研究综合层，负责横向比较、human-in-the-loop 规则总结和最终分析文档。
 
 `4_output` 是展示适配层，负责把已经形成的研究结果转成课堂、组员或讲义可以使用的表达。
 
@@ -10,7 +10,7 @@
 
 ```text
 3_synthesis 负责“研究上能说什么”。
-4_output 负责“展示时怎么说”。
+4_output 负责“已经确认的研究内容怎么展示”。
 ```
 
 ## 3_synthesis 可以做什么
@@ -22,6 +22,7 @@
 - 比较赔偿基数、倍数、责任竞合处理
 - 形成最终文档版 pre 材料
 - 标记证据不足或待核验的问题
+- 通过 human legal judgment memo 锁定 final legal conclusions
 
 `3_synthesis` 必须引用或回溯：
 
@@ -44,9 +45,11 @@
 
 `4_output` 不新增实质结论。
 
+`4_output` 不能强化、弱化、改写或发明 `3_synthesis` 中的法律结论。
+
 ## output 层不能反向污染 synthesis 层
 
-output 层不能为了讲得好听、节奏更顺或观点更鲜明，反向修改 `3_synthesis` 中的研究判断。
+output 层不能为了讲得好听、节奏更顺或观点更鲜明，反向修改、强化或软化 `3_synthesis` 中的研究判断。
 
 如果在制作展示材料时发现问题，应回到对应层级处理：
 
