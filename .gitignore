@@ -1,0 +1,36 @@
+﻿# Public harness: do not commit raw/source materials
+0_raw/**
+!0_raw/**/
+!0_raw/**/.gitkeep
+!0_raw/metadata/source-index.md
+
+Clippings/
+.obsidian/
+
+# Generated/source-specific research content; add manually only after review
+1_digest/case_cards/*.md
+1_digest/rule_cards/*.md
+1_digest/paper_cards/*.md
+1_digest/notebook_outputs/*.md
+!1_digest/**/.gitkeep
+
+# Large/document files
+*.pdf
+*.docx
+*.doc
+*.zip
+*.rar
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/

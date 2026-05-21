@@ -1,0 +1,26 @@
+project_name: punitive-damages-research
+topic: 惩罚性损害赔偿实务判例梳理
+mode: legal-research-workflow
+raw_control: human_collected
+
+ai_roles:
+  mimo:
+    - case_digest_draft
+    - case_review
+    - structured_extraction
+  notebooklm:
+    - literature_debate_map
+    - paper_question_extraction
+    - concept_framework
+  human:
+    - source_selection
+    - legal_judgment
+    - final_synthesis
+    - quality_control
+
+layers:
+  - 0_raw
+  - 1_digest
+  - 2_framework
+  - 3_synthesis
+  - 4_output
