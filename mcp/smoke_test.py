@@ -8,10 +8,20 @@ from config import PathSafetyError, REPO_ROOT, TEMPLATE_FILES, safe_resolve
 from resources.registry import get_resource_entries, missing_resource_files
 from schemas import TargetStep
 from tools.status import check_step_prerequisites, get_project_status
+from tools.validators import (
+    _validate_text_for_layer,
+    validate_digest_card,
+    validate_layer_boundary,
+    validate_synthesis_claims,
+)
 from tools.write import append_workflow_log, create_from_template
 
 
-SMOKE_DIR = REPO_ROOT / "4_output" / ".mcp_smoke"
+SMOKE_DIRS = [
+    REPO_ROOT / "1_digest" / ".mcp_smoke",
+    REPO_ROOT / "3_synthesis" / ".mcp_smoke",
+    REPO_ROOT / "4_output" / ".mcp_smoke",
+]
 
 
 def test_server_imports() -> None:
@@ -68,6 +78,14 @@ def test_path_traversal_rejected() -> None:
     except PathSafetyError:
         return
     raise AssertionError("path traversal was not rejected")
+
+
+def test_git_path_rejected() -> None:
+    try:
+        safe_resolve(".git/config")
+    except PathSafetyError:
+        return
+    raise AssertionError(".git path was not rejected")
 
 
 def test_create_from_template_allowed_layer() -> None:
@@ -159,6 +177,117 @@ def test_append_workflow_log_fixed_path() -> None:
             log_path.write_bytes(original)
 
 
+def _write_smoke_file(layer: str, name: str, content: str) -> str:
+    smoke_dir = REPO_ROOT / layer / ".mcp_smoke"
+    smoke_dir.mkdir(parents=True, exist_ok=True)
+    path = smoke_dir / name
+    path.write_text(content, encoding="utf-8")
+    return path.relative_to(REPO_ROOT).as_posix()
+
+
+def test_validate_layer_boundary_rejects_absolute_path() -> None:
+    try:
+        validate_layer_boundary(str(REPO_ROOT / "README.md"))
+    except PathSafetyError:
+        return
+    raise AssertionError("absolute validation path was not rejected")
+
+
+def test_validate_layer_boundary_rejects_path_traversal() -> None:
+    try:
+        validate_layer_boundary("../README.md")
+    except PathSafetyError:
+        return
+    raise AssertionError("path traversal validation path was not rejected")
+
+
+def test_validate_layer_boundary_rejects_outside_repo() -> None:
+    try:
+        validate_layer_boundary("..\\outside.md")
+    except PathSafetyError:
+        return
+    raise AssertionError("repo-external validation path was not rejected")
+
+
+def test_validate_layer_boundary_flags_raw_pollution() -> None:
+    issues = _validate_text_for_layer("综合来看，本案说明如下。待核验。", "0_raw")
+    assert any(issue["severity"] == "error" for issue in issues)
+
+
+def test_validate_layer_boundary_flags_digest_synthesis_language() -> None:
+    target = _write_smoke_file(
+        "1_digest",
+        "digest_boundary.md",
+        "司法实践通常认为，与其他案例相比，可以得出一般规则。",
+    )
+    result = validate_layer_boundary(target)
+    assert result["layer"] == "1_digest"
+    assert result["valid"] is False
+
+
+def test_validate_digest_card_flags_case_generalization() -> None:
+    target = _write_smoke_file(
+        "1_digest",
+        "case_card.md",
+        "case_id: CC-SMOKE\n规则是法院一般应当认定，可以得出一般规则。",
+    )
+    result = validate_digest_card(target, "case_card")
+    assert result["valid"] is False
+    assert result["card_type"] == "case_card"
+
+
+def test_validate_digest_card_flags_paper_opinion_as_rule() -> None:
+    target = _write_smoke_file(
+        "1_digest",
+        "paper_card.md",
+        "paper_id: PC-SMOKE\n作者认为法院规则是可以直接适用。",
+    )
+    result = validate_digest_card(target, "paper_card")
+    assert result["valid"] is False
+    assert result["card_type"] == "paper_card"
+
+
+def test_validate_digest_card_flags_rule_missing_source_anchor() -> None:
+    target = _write_smoke_file(
+        "1_digest",
+        "rule_card.md",
+        "规则内容：一律支持惩罚性赔偿。",
+    )
+    result = validate_digest_card(target, "rule_card")
+    assert result["valid"] is False
+    assert any(issue["severity"] == "error" for issue in result["issues"])
+
+
+def test_validate_synthesis_claims_flags_unsupported_broad_claim() -> None:
+    target = _write_smoke_file(
+        "3_synthesis",
+        "synthesis_claim.md",
+        "司法实践通常认为裁判规则是已经形成规则。",
+    )
+    result = validate_synthesis_claims(target)
+    assert result["valid"] is False
+
+
+def test_validate_synthesis_claims_flags_single_case_general_rule() -> None:
+    target = _write_smoke_file(
+        "3_synthesis",
+        "single_case_claim.md",
+        "仅凭本案可以得出一般规则。",
+    )
+    result = validate_synthesis_claims(target)
+    assert result["valid"] is False
+
+
+def test_validate_synthesis_claims_flags_strong_language() -> None:
+    target = _write_smoke_file(
+        "3_synthesis",
+        "strong_language.md",
+        "该责任必然成立，一律支持，均应适用。",
+    )
+    result = validate_synthesis_claims(target)
+    assert result["valid"] is False
+
+
 def run() -> None:
     tests = [
         test_server_imports,
@@ -167,20 +296,33 @@ def run() -> None:
         test_project_status_keys,
         test_check_step_prerequisites_keys,
         test_path_traversal_rejected,
+        test_git_path_rejected,
         test_create_from_template_allowed_layer,
         test_create_from_template_rejects_0_raw,
         test_create_from_template_rejects_path_traversal,
         test_create_from_template_rejects_absolute_path,
         test_create_from_template_refuses_overwrite_by_default,
         test_append_workflow_log_fixed_path,
+        test_validate_layer_boundary_rejects_absolute_path,
+        test_validate_layer_boundary_rejects_path_traversal,
+        test_validate_layer_boundary_rejects_outside_repo,
+        test_validate_layer_boundary_flags_raw_pollution,
+        test_validate_layer_boundary_flags_digest_synthesis_language,
+        test_validate_digest_card_flags_case_generalization,
+        test_validate_digest_card_flags_paper_opinion_as_rule,
+        test_validate_digest_card_flags_rule_missing_source_anchor,
+        test_validate_synthesis_claims_flags_unsupported_broad_claim,
+        test_validate_synthesis_claims_flags_single_case_general_rule,
+        test_validate_synthesis_claims_flags_strong_language,
     ]
     try:
         for test in tests:
             test()
             print(f"ok - {test.__name__}")
     finally:
-        if SMOKE_DIR.exists():
-            shutil.rmtree(SMOKE_DIR)
+        for smoke_dir in SMOKE_DIRS:
+            if smoke_dir.exists():
+                shutil.rmtree(smoke_dir)
 
 
 if __name__ == "__main__":

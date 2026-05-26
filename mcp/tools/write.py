@@ -46,7 +46,7 @@ def _resolve_write_target(target_layer: str, target_relative_path: str) -> Path:
         raise PathSafetyError(f"Target layer is not writable: {target_layer}. Allowed: {allowed}")
 
     relative = Path(target_relative_path)
-    if relative.is_absolute() or relative.anchor or ".." in relative.parts:
+    if relative.is_absolute() or relative.anchor or ".." in relative.parts or ".git" in relative.parts:
         raise PathSafetyError(f"Rejected unsafe target path: {target_relative_path}")
     if not relative.parts:
         raise PathSafetyError("Target path must name a file inside the target layer.")

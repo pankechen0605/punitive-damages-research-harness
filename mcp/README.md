@@ -4,8 +4,9 @@ This directory contains a local-first MCP server for the punitive damages legal
 research harness.
 
 The server exposes repository workflow documents, templates, and prompt files as
-MCP resources and prompts. It also provides deterministic status tools and
-PR-MCP-2 controlled write tools that preserve the harness layer boundaries.
+MCP resources and prompts. It also provides deterministic status tools,
+PR-MCP-2 controlled write tools, and PR-MCP-3 heuristic validators that preserve
+the harness layer boundaries.
 
 ## What It Does
 
@@ -18,6 +19,10 @@ PR-MCP-2 controlled write tools that preserve the harness layer boundaries.
 - Provides controlled write tools:
   - `create_from_template`
   - `append_workflow_log`
+- Provides heuristic validation tools:
+  - `validate_layer_boundary`
+  - `validate_digest_card`
+  - `validate_synthesis_claims`
 - Resolves all paths relative to the repository root.
 - Rejects path traversal and paths outside the repository.
 
@@ -38,6 +43,23 @@ These tools do not generate legal analysis or legal conclusions. They do not
 write to `0_raw/`, do not replace human review, and do not expand the research
 scope.
 
+## Validation In PR-MCP-3
+
+The validation tools are deterministic keyword and pattern checks. They help
+identify likely layer-boundary problems, unsupported synthesis claims, and
+digest-card overreach.
+
+Validators are intentionally limited:
+
+- They do not determine legal correctness.
+- They do not edit files.
+- They do not auto-fix files.
+- They do not generate replacement legal analysis.
+- They do not replace human review.
+
+False positives are possible. Treat validation output as a review aid for layer
+discipline, source traceability, and human-review checkpoints.
+
 ## What It Does Not Do
 
 - It does not modify `0_raw`.
@@ -48,6 +70,7 @@ scope.
 - It does not fabricate cases, statutes, papers, courts, authors, or outcomes.
 - It does not generate final legal conclusions.
 - It does not provide arbitrary file writes.
+- It does not auto-repair research files.
 
 ## Run Locally
 
@@ -90,7 +113,7 @@ supports local stdio servers.
 The smoke script does not require the MCP SDK. It verifies import safety,
 registry file existence, status keys, path traversal rejection, controlled
 template creation, overwrite refusal, `0_raw` rejection, absolute-path rejection,
-and fixed-path workflow log append behavior:
+fixed-path workflow log append behavior, and PR-MCP-3 validator heuristics:
 
 ```powershell
 python mcp/smoke_test.py
@@ -98,8 +121,7 @@ python mcp/smoke_test.py
 
 ## Safety Boundaries
 
-This PR-MCP-2 server has controlled writes only. It preserves the legal research
-layer boundaries:
+This MCP server preserves the legal research layer boundaries:
 
 - `0_raw` remains a clean source-material layer.
 - `1_digest` is single-source digestion only.

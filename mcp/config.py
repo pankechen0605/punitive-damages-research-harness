@@ -96,7 +96,7 @@ class PathSafetyError(ValueError):
 
 def safe_resolve(relative_path: str) -> Path:
     path = Path(relative_path)
-    if path.is_absolute() or path.anchor or ".." in path.parts:
+    if path.is_absolute() or path.anchor or ".." in path.parts or ".git" in path.parts:
         raise PathSafetyError(f"Rejected unsafe path: {relative_path}")
 
     resolved = (REPO_ROOT / path).resolve()

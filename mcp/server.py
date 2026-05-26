@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 
 MCP_DIR = Path(__file__).resolve().parent
@@ -21,6 +21,11 @@ from tools.status import (
 from tools.write import (
     append_workflow_log as append_workflow_log_impl,
     create_from_template as create_from_template_impl,
+)
+from tools.validators import (
+    validate_digest_card as validate_digest_card_impl,
+    validate_layer_boundary as validate_layer_boundary_impl,
+    validate_synthesis_claims as validate_synthesis_claims_impl,
 )
 
 
@@ -116,6 +121,27 @@ def create_server() -> Any:
             summary=summary,
             warnings=warnings,
         )
+
+    @app.tool()
+    def validate_layer_boundary(target_relative_path: str) -> dict[str, Any]:
+        """Heuristically check whether a file violates harness layer boundaries."""
+
+        return validate_layer_boundary_impl(target_relative_path)
+
+    @app.tool()
+    def validate_digest_card(
+        target_relative_path: str,
+        card_type: Literal["case_card", "rule_card", "paper_card", "auto"] = "auto",
+    ) -> dict[str, Any]:
+        """Heuristically validate a single-source digest card."""
+
+        return validate_digest_card_impl(target_relative_path, card_type)
+
+    @app.tool()
+    def validate_synthesis_claims(target_relative_path: str) -> dict[str, Any]:
+        """Heuristically check synthesis claims for traceability and over-elevation."""
+
+        return validate_synthesis_claims_impl(target_relative_path)
 
     return app
 
