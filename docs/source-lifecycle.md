@@ -156,6 +156,25 @@
 - normative map 能为案例观察提供规则锚点
 - handout 不新增未经核验的法律结论
 
+### Normative Backfill Loop
+
+规范链路也允许从后续环节反向发现缺口：
+
+```text
+case card / claim ledger / rule anchor map
+→ normative backfill review
+→ 0_raw/laws
+→ 1_digest/rule_cards
+→ 2_framework/normative_map
+→ 3_synthesis/rule_anchor_map
+```
+
+这是一种正式回填机制，不是把 synthesis 内容倒灌进 raw。能够进入 `0_raw/laws` 的仍然只能是规范原文或忠实摘录。
+
+case card 中出现的法条名称、条号或法院说理只能作为 backfill clue。只有找到规范原文并生成 rule card 后，才可以在 rule anchor map 中作为候选规则锚点。
+
+详见 `docs/normative-backfill-workflow.md`。
+
 ## 观察要素生成链路
 
 观察要素生成链路适用于所有主题。它是将 topic instance 转化为可执行案例阅读任务的桥。

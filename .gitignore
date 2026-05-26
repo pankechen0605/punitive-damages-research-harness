@@ -6,6 +6,9 @@
 
 Clippings/
 .obsidian/
+_inbox/**
+!_inbox/**/
+!_inbox/**/.gitkeep
 
 # Generated/source-specific research content; add manually only after review
 1_digest/case_cards/*.md

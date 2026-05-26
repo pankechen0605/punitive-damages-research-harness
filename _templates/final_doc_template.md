@@ -8,20 +8,27 @@
 - Evidence Manifest：
 - Framework Version：
 - Human Legal Judgment Memo：
+- Article Spine：
+- Section Blueprint：
+- Legal Writing Rationale Matrix：
 
-## 二、Case Observations
+## 二、Article Spine and Structure
+
+本节只说明 confirmed article spine、章节安排和材料取舍逻辑，不新增法律结论。
+
+## 三、Case Observations
 
 只记录可回溯到 case cards 的观察，不写最终法律结论。
 
-## 三、Tentative Patterns
+## 四、Tentative Patterns
 
 写明样本范围、支持材料、反向材料和待核验事项。
 
-## 四、Rule Anchors
+## 五、Rule Anchors
 
 列出可回溯到 rule cards 或 authoritative rule anchors 的规范支撑，并说明适用范围。
 
-## 五、Human-Confirmed Legal Conclusions
+## 六、Human-Confirmed Legal Conclusions
 
 只放经过 human sign-off 的 final legal conclusions。
 
@@ -29,11 +36,11 @@
 |---|---|---|---|---|
 | | | | | |
 
-## 六、Limitations and Pending Verification
+## 七、Limitations and Pending Verification
 
 -
 
-## 七、Traceability Appendix
+## 八、Traceability Appendix
 
 | Claim / Conclusion ID | Source Cards | Rule Anchors | Review Status |
 |---|---|---|---|

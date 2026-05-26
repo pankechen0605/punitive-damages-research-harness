@@ -26,6 +26,7 @@
 | 老师课堂原始录音/课件 | 可新建合适 raw 子目录前先人工确认，或暂存外部 | 否 | 有条件 | 若作为原始课堂材料入库，应保留原文件和来源信息。 |
 | 老师课堂整理笔记 | `2_framework/field_design/` 或 `docs/current-pre-scope.md` | 可由人工或 AI 整理 | 否 | 如果不是原始材料，不应进入 raw。 |
 | 本项目阶段摘要 / handoff | 根目录、`docs/` 或 `_logs/` | 可由 AI 辅助 | 否 | 用于协作交接，不是研究材料底本。 |
+| 从 case card 发现的法条线索 | `_templates/normative_backfill_review_template.md` 生成的 backfill review；规范原文另入 `0_raw/laws/` | 可由 AI 辅助登记线索 | 否 | 线索不能进入 raw；只有找到规范原文或忠实摘录后才可进入 `0_raw/laws`。 |
 
 ## 快速判断
 
@@ -34,3 +35,4 @@
 - 如果它回答“我们应该怎么看材料”，进入 `2_framework`。
 - 如果它回答“多个材料放在一起说明什么”，进入 `3_synthesis`。
 - 如果它回答“课堂或组员怎么使用”，进入 `4_output`。
+- 如果它只是从案例、claim 或 risk review 中发现的规范线索，先进入 normative backfill review；不要直接放入 `0_raw/laws`。

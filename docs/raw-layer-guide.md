@@ -99,8 +99,11 @@ AI 总结不能进入 raw。
 - PPT 提纲
 - 阶段 handoff
 - 没有来源的案例或论文信息
+- 从 case card 或 claim ledger 中抽出的法条线索本身
 
 这些材料应根据功能放入 `1_digest`、`2_framework`、`3_synthesis`、`4_output` 或 `docs`。
+
+如果法条线索来自 case card，应先走 `docs/normative-backfill-workflow.md`。只有找到规范原文或忠实摘录后，规范文本本身才可以进入 `0_raw/laws`；线索记录、AI 判断和回填说明不得进入 raw。
 
 ## 9. raw 层污染示例
 

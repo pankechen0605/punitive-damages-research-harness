@@ -155,6 +155,7 @@ legal conclusion author
 ### 输出
 
 - `rule_anchor_map.md`
+- 必要时输出 `normative_backfill_review.md`
 
 ### AI 可做
 
@@ -167,10 +168,12 @@ legal conclusion author
 - 不得把普通案例直接映射成 rule anchor。
 - 不得把论文观点直接映射成 rule anchor。
 - 不得创造新的 rule anchor。
+- 不得把 case card 中的法条引用直接当成 rule anchor。
 
 ### 人工检查点
 
 - 人判断 rule anchor 是否足以支撑后续结论。
+- 如果出现 anchor gap，人决定是否启动 `docs/normative-backfill-workflow.md`。
 
 ## 9.4 Risk & Overclaim Review
 
@@ -196,15 +199,88 @@ legal conclusion author
 
 - 不得在风险审查中新增结论来“修补”原结论。
 - 不得用风险审查替代人工判断。
+- 不得用文章主线需求替代规范回填。
 
 ### 人工检查点
 
 - 人决定是否降级、删除、改写相关 claim。
+- 对于规范依据不足的 claim，人决定 backfill、降级或标记待核验。
 
-## 9.5 Human Legal Judgment Lock
+## 9.5 Article Spine Confirmation
 
 ### 输入
 
+- evidence manifest
+- claim ledger
+- pattern draft
+- rule anchor map
+- risk review
+
+### 输出
+
+- `article_spine.md`
+
+### AI 可做
+
+- 提出 2-3 个可选文章主线。
+- 说明每个主线与现有证据的匹配程度。
+- 标记每个主线的过度概括风险。
+- 建议哪些 cards 进入正文、附表、背景、反例或待核验。
+
+### 禁止事项
+
+- 不得为了形成文章主线而新增案例、法条、论文或结论。
+- 不得把 tentative pattern 写成文章中心结论。
+- 不得选择性隐藏反向材料或待核验材料。
+- 不得让 article spine 替代后续 human legal judgment memo。
+
+### 人工检查点
+
+- 人确认本轮 final document 的读者面对主线。
+- 人确认哪些 cards / claims 进入正文论证链。
+- 人确认哪些材料只作为附表、背景、反例或待核验。
+
+## 9.6 Section Blueprint and Writing Rationale Matrix
+
+### 输入
+
+- article spine
+- claim ledger
+- rule anchor map
+- risk review
+
+### 输出
+
+- `section_blueprint.md`
+- `legal_writing_rationale_matrix.md`
+
+### AI 可做
+
+- 把 article spine 转化为章节结构。
+- 说明每一节的写作功能。
+- 为每个写作单元绑定 claim、source/card anchor 和 human review status。
+- 标记每个写作单元允许使用的表述强度。
+
+### 禁止事项
+
+- 不得把章节标题写成未经确认的法律结论。
+- 不得让没有来源的段落进入 final document。
+- 不得把 paper card 当作 court rule。
+- 不得把普通案例单独提升为 rule anchor。
+
+### 人工检查点
+
+- 人确认章节顺序服务 article spine。
+- 人确认每个写作单元都有证据边界和表述强度限制。
+- 人确认可以进入 human legal judgment lock。
+
+## 9.7 Human Legal Judgment Lock
+
+### 输入
+
+- article spine
+- section blueprint
+- legal writing rationale matrix
 - claim ledger
 - pattern draft
 - rule anchor map
@@ -219,11 +295,13 @@ legal conclusion author
 - 提供整理后的备选结论。
 - 提供风险提示。
 - 提供表达强度建议。
+- 标记某个 claim 在文章结构中可能被说得过强的位置。
 
 ### 禁止事项
 
 - AI 不得自行把 tentative pattern 提升为 final legal conclusion。
 - AI 不得替人签署 legal judgment。
+- AI 不得为了适配 article spine 而强化、软化或重写法律判断。
 
 ### 人工检查点
 
@@ -236,13 +314,16 @@ legal conclusion author
 
 没有 human decision 的内容，不得进入 final legal conclusion。
 
-## 9.6 Final Document Assembly
+## 9.8 Final Document Assembly
 
 ### 输入
 
 - human legal judgment memo
 - claim ledger
 - rule anchor map
+- article spine
+- section blueprint
+- legal writing rationale matrix
 
 ### 输出
 
@@ -260,17 +341,22 @@ legal conclusion author
 - 不得新增结论。
 - 不得强化结论语言。
 - 不得删除限制条件。
+- 不得偏离 confirmed article spine。
+- 不得使用 legal writing rationale matrix 未登记的核心 claim。
 - 不得让 output 层表达反向污染 synthesis 判断。
 
 ### 人工检查点
 
 - 人最终通读。
 - 人确认 final report 只包含 human-confirmed conclusions。
+- 人确认 final report 的文章主线没有选择性隐藏反向材料或待核验内容。
 
 ## 核心闸门
 
 ```text
 AI may draft → AI may not conclude
 Human may elevate → Human must sign off
+Article spine may organize → Article spine may not invent
+Human may lock after spine → Human judgment is not a writing convenience
 Output may present → Output may not create new synthesis
 ```

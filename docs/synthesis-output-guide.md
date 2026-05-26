@@ -20,9 +20,10 @@
 - 做横向比较
 - 总结支持或不支持惩罚性赔偿的裁判因素
 - 比较赔偿基数、倍数、责任竞合处理
+- 在 final document 前确认 article spine、section blueprint 和 legal writing rationale matrix
 - 形成最终文档版 pre 材料
 - 标记证据不足或待核验的问题
-- 通过 human legal judgment memo 锁定 final legal conclusions
+- 在 article spine 和 writing rationale matrix 形成后，通过 human legal judgment memo 锁定 final legal conclusions
 
 `3_synthesis` 必须引用或回溯：
 
@@ -32,6 +33,16 @@
 - framework 中的观察维度
 
 如果一个结论无法回到卡片或原始材料，应标记“待核验”，不能写成确定规则。
+
+final document 不能从横向比较表或 rule summary 直接跳写。应先完成：
+
+- `3_synthesis/final_doc/article_spine.md`
+- `3_synthesis/final_doc/section_blueprint.md`
+- `3_synthesis/final_doc/legal_writing_rationale_matrix.md`
+
+这三个文件负责把研究库存转化为读者可读的文章结构。它们可以筛选哪些 cards 进入正文论证链，但不得删除、隐藏或改写研究层材料，也不得新增法律结论。
+
+human legal judgment memo 应在 article spine、section blueprint 和 legal writing rationale matrix 之后形成或复核，因为最终法律判断需要知道 claim 将被放在文章中的什么位置、承担什么论证功能、是否存在被主线强化的风险。
 
 ## 4_output 可以做什么
 

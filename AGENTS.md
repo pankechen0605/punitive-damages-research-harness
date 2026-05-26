@@ -142,6 +142,15 @@ activate topic config
 6. 未锁定的权重不得用于输出最终规则总结。
 7. 不得把 P0 要素写成法院通常规则。
 
+## Normative Backfill 规则
+
+- 从 case card、claim ledger 或 rule anchor map 发现的法条、司法解释或规范性文件只能作为 backfill clue。
+- backfill clue 不能直接进入 `0_raw/laws`，也不能直接作为 rule anchor。
+- 发现规范缺口时，应按 [docs/normative-backfill-workflow.md](docs/normative-backfill-workflow.md) 执行。
+- 规范原文或忠实摘录入 `0_raw/laws` 后，必须更新 `source-index.md`，并生成或更新 `1_digest/rule_cards`。
+- rule anchor map 应标记 anchor 是 `initial_intake`、`backfilled` 还是 `pending_backfill`。
+- 未完成 backfill 的 claim 不得升级为 final legal conclusion。
+
 ## Synthesis Human Review 规则
 
 - 第 9 步必须按 [docs/synthesis-human-review-workflow.md](docs/synthesis-human-review-workflow.md) 执行。
@@ -150,5 +159,6 @@ activate topic config
 - final legal conclusion 必须有 human legal judgment memo 或明确 human sign-off。
 - 普通案例不能单独作为 rule anchor。
 - paper card 只能作为 scholarly interpretation，不能写成 court rule。
+- final document assembly 前必须先确认 article spine、section blueprint 和 legal writing rationale matrix；这些文件只组织表达结构，不新增法律结论。
 - final document assembly 只能使用 human-confirmed conclusions。
 - output 层不得强化、删改或新增 synthesis 层结论。
