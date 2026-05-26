@@ -18,6 +18,10 @@ from tools.status import (
     get_project_status as get_project_status_impl,
     list_harness_assets as list_harness_assets_impl,
 )
+from tools.write import (
+    append_workflow_log as append_workflow_log_impl,
+    create_from_template as create_from_template_impl,
+)
 
 
 def _load_fastmcp() -> Any:
@@ -76,6 +80,42 @@ def create_server() -> Any:
         """List repository docs, templates, prompts, and scripts exposed to clients."""
 
         return list_harness_assets_impl()
+
+    @app.tool()
+    def create_from_template(
+        template_name: str,
+        target_layer: str,
+        target_relative_path: str,
+        title: str | None = None,
+        source_id: str | None = None,
+        overwrite: bool = False,
+    ) -> dict[str, Any]:
+        """Create a controlled template skeleton in an allowed research layer."""
+
+        return create_from_template_impl(
+            template_name=template_name,
+            target_layer=target_layer,
+            target_relative_path=target_relative_path,
+            title=title,
+            source_id=source_id,
+            overwrite=overwrite,
+        )
+
+    @app.tool()
+    def append_workflow_log(
+        action: str,
+        target: str,
+        summary: str,
+        warnings: list[str] | None = None,
+    ) -> dict[str, Any]:
+        """Append a short structured entry to _logs/workflow-log.md."""
+
+        return append_workflow_log_impl(
+            action=action,
+            target=target,
+            summary=summary,
+            warnings=warnings,
+        )
 
     return app
 

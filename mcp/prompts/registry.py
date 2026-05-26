@@ -8,10 +8,13 @@ from config import PROMPT_FILES, exists, read_repo_text
 PROMPT_BOUNDARY = """\
 Safety boundary:
 - Rely only on user-provided materials and repository-provided materials.
+- Preserve the harness layer boundaries: 0_raw is source-only, 1_digest is single-source digestion,
+  2_framework is factor and weighting design, 3_synthesis is cross-case comparison and synthesis,
+  and 4_output is presentation adaptation only.
 - Do not search the web.
 - Do not fabricate cases, case numbers, courts, statutes, authors, papers, or outcomes.
 - Do not make final legal judgments.
-- Mark uncertain legal content as 待核验.
+- Mark uncertain legal content as \u5f85\u6838\u9a8c.
 """
 
 

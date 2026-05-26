@@ -120,7 +120,7 @@ def check_step_prerequisites(target_step: TargetStep) -> StepPrerequisites:
             missing.append("2_framework layer")
         if not has_factor_model:
             missing.append("factor_or_weighting_model")
-        suggested = "Run a pilot case check and mark uncertain content as 待核验."
+        suggested = "Run a pilot case check and mark uncertain content as \u5f85\u6838\u9a8c."
     elif target_step == TargetStep.FRAMEWORK_LOCK:
         if not has_factor_model:
             missing.append("factor_or_weighting_model")

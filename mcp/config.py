@@ -45,6 +45,35 @@ PROMPT_FILES = {
     "final_document_assembly": "_prompts/final_document_assembly_prompt.md",
 }
 
+TEMPLATE_FILES = {
+    "case_card_template.md": "_templates/case_card_template.md",
+    "rule_card_template.md": "_templates/rule_card_template.md",
+    "paper_card_template.md": "_templates/paper_card_template.md",
+    "cross_case_comparison_template.md": "_templates/cross_case_comparison_template.md",
+    "final_doc_template.md": "_templates/final_doc_template.md",
+    "adjudication_factor_model_template.md": "_templates/adjudication_factor_model_template.md",
+    "factor_weighting_model_template.md": "_templates/factor_weighting_model_template.md",
+    "derived_case_fields_template.md": "_templates/derived_case_fields_template.md",
+    "rule_anchor_map_template.md": "_templates/rule_anchor_map_template.md",
+    "claim_ledger_template.md": "_templates/claim_ledger_template.md",
+    "synthesis_draft_template.md": "_templates/synthesis_draft_template.md",
+    "synthesis_evidence_manifest_template.md": "_templates/synthesis_evidence_manifest_template.md",
+    "synthesis_risk_review_template.md": "_templates/synthesis_risk_review_template.md",
+    "human_legal_judgment_memo_template.md": "_templates/human_legal_judgment_memo_template.md",
+    "article_spine_template.md": "_templates/article_spine_template.md",
+    "section_blueprint_template.md": "_templates/section_blueprint_template.md",
+    "legal_writing_rationale_matrix_template.md": "_templates/legal_writing_rationale_matrix_template.md",
+    "normative_backfill_review_template.md": "_templates/normative_backfill_review_template.md",
+    "topic_config_template.md": "_templates/topic_config_template.md",
+}
+
+ALLOWED_WRITE_LAYERS = {
+    "1_digest",
+    "2_framework",
+    "3_synthesis",
+    "4_output",
+}
+
 LAYER_DIRS = {
     "raw": "0_raw",
     "digest": "1_digest",
@@ -67,7 +96,7 @@ class PathSafetyError(ValueError):
 
 def safe_resolve(relative_path: str) -> Path:
     path = Path(relative_path)
-    if path.is_absolute() or ".." in path.parts:
+    if path.is_absolute() or path.anchor or ".." in path.parts:
         raise PathSafetyError(f"Rejected unsafe path: {relative_path}")
 
     resolved = (REPO_ROOT / path).resolve()

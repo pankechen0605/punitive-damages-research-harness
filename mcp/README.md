@@ -4,8 +4,8 @@ This directory contains a local-first MCP server for the punitive damages legal
 research harness.
 
 The server exposes repository workflow documents, templates, and prompt files as
-read-only MCP resources and prompts. It also provides deterministic status tools
-that help MCP clients respect the harness workflow.
+MCP resources and prompts. It also provides deterministic status tools and
+PR-MCP-2 controlled write tools that preserve the harness layer boundaries.
 
 ## What It Does
 
@@ -15,19 +15,39 @@ that help MCP clients respect the harness workflow.
   - `get_project_status`
   - `check_step_prerequisites`
   - `list_harness_assets`
+- Provides controlled write tools:
+  - `create_from_template`
+  - `append_workflow_log`
 - Resolves all paths relative to the repository root.
 - Rejects path traversal and paths outside the repository.
 
+## Controlled Writes In PR-MCP-2
+
+`create_from_template` creates template skeleton files only. It uses a fixed
+allowlist of existing files under `_templates/` and may write only under:
+
+- `1_digest/`
+- `2_framework/`
+- `3_synthesis/`
+- `4_output/`
+
+`append_workflow_log` appends short structured entries only to
+`_logs/workflow-log.md`.
+
+These tools do not generate legal analysis or legal conclusions. They do not
+write to `0_raw/`, do not replace human review, and do not expand the research
+scope.
+
 ## What It Does Not Do
 
-- It does not write files.
-- It does not modify `0_raw` or any other layer.
+- It does not modify `0_raw`.
 - It does not execute shell commands.
 - It does not make network requests.
 - It does not call LLM APIs.
 - It does not search the web.
 - It does not fabricate cases, statutes, papers, courts, authors, or outcomes.
 - It does not generate final legal conclusions.
+- It does not provide arbitrary file writes.
 
 ## Run Locally
 
@@ -68,7 +88,9 @@ supports local stdio servers.
 ## Smoke Check
 
 The smoke script does not require the MCP SDK. It verifies import safety,
-registry file existence, status keys, and path traversal rejection:
+registry file existence, status keys, path traversal rejection, controlled
+template creation, overwrite refusal, `0_raw` rejection, absolute-path rejection,
+and fixed-path workflow log append behavior:
 
 ```powershell
 python mcp/smoke_test.py
@@ -76,8 +98,8 @@ python mcp/smoke_test.py
 
 ## Safety Boundaries
 
-This PR-MCP-1 server is read-only. It preserves the legal research layer
-boundaries:
+This PR-MCP-2 server has controlled writes only. It preserves the legal research
+layer boundaries:
 
 - `0_raw` remains a clean source-material layer.
 - `1_digest` is single-source digestion only.
