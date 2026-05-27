@@ -6,7 +6,8 @@ research harness.
 The server exposes repository workflow documents, templates, and prompt files as
 MCP resources and prompts. It also provides deterministic status tools,
 PR-MCP-2 controlled write tools, and PR-MCP-3 heuristic validators that preserve
-the harness layer boundaries.
+the harness layer boundaries. PR-MCP-4 adds a controlled PDF text-extraction
+wrapper for raw-source machine-readable copies.
 
 ## What It Does
 
@@ -23,6 +24,8 @@ the harness layer boundaries.
   - `validate_layer_boundary`
   - `validate_digest_card`
   - `validate_synthesis_claims`
+- Provides controlled extraction tools:
+  - `run_pdf_to_md`
 - Resolves all paths relative to the repository root.
 - Rejects path traversal and paths outside the repository.
 
@@ -60,9 +63,22 @@ Validators are intentionally limited:
 False positives are possible. Treat validation output as a review aid for layer
 discipline, source traceability, and human-review checkpoints.
 
+## PDF Extraction In PR-MCP-4
+
+`run_pdf_to_md` wraps the existing `scripts/pdf_to_md.py` extractor. It accepts
+only relative `.pdf` inputs under `0_raw/` and writes extracted Markdown only
+under `0_raw/extracted_md/`.
+
+The tool defaults to `dry_run=true`. It refuses to overwrite existing Markdown
+unless `overwrite=true`.
+
+This tool does not modify the original PDF. It does not summarize, interpret,
+create digest cards, generate legal analysis, call web services, call LLM APIs,
+or execute arbitrary shell commands.
+
 ## What It Does Not Do
 
-- It does not modify `0_raw`.
+- It does not modify original PDFs or raw source files.
 - It does not execute shell commands.
 - It does not make network requests.
 - It does not call LLM APIs.
@@ -71,6 +87,8 @@ discipline, source traceability, and human-review checkpoints.
 - It does not generate final legal conclusions.
 - It does not provide arbitrary file writes.
 - It does not auto-repair research files.
+- It does not convert PDFs outside the controlled `0_raw` to `0_raw/extracted_md`
+  path.
 
 ## Run Locally
 
@@ -113,7 +131,8 @@ supports local stdio servers.
 The smoke script does not require the MCP SDK. It verifies import safety,
 registry file existence, status keys, path traversal rejection, controlled
 template creation, overwrite refusal, `0_raw` rejection, absolute-path rejection,
-fixed-path workflow log append behavior, and PR-MCP-3 validator heuristics:
+fixed-path workflow log append behavior, PR-MCP-3 validator heuristics, and
+PR-MCP-4 PDF wrapper guardrails:
 
 ```powershell
 python mcp/smoke_test.py

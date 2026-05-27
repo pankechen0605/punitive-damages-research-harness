@@ -8,6 +8,7 @@ from config import PathSafetyError, REPO_ROOT, TEMPLATE_FILES, safe_resolve
 from resources.registry import get_resource_entries, missing_resource_files
 from schemas import TargetStep
 from tools.status import check_step_prerequisites, get_project_status
+from tools.pdf import run_pdf_to_md
 from tools.validators import (
     _validate_text_for_layer,
     validate_digest_card,
@@ -18,10 +19,12 @@ from tools.write import append_workflow_log, create_from_template
 
 
 SMOKE_DIRS = [
+    REPO_ROOT / "0_raw" / ".mcp_smoke",
     REPO_ROOT / "1_digest" / ".mcp_smoke",
     REPO_ROOT / "3_synthesis" / ".mcp_smoke",
     REPO_ROOT / "4_output" / ".mcp_smoke",
 ]
+SMOKE_PDF_OUTPUT = REPO_ROOT / "0_raw" / "extracted_md" / "mcp_smoke.md"
 
 
 def test_server_imports() -> None:
@@ -177,6 +180,67 @@ def test_append_workflow_log_fixed_path() -> None:
             log_path.write_bytes(original)
 
 
+def _write_smoke_pdf() -> str:
+    smoke_dir = REPO_ROOT / "0_raw" / ".mcp_smoke"
+    smoke_dir.mkdir(parents=True, exist_ok=True)
+    pdf_path = smoke_dir / "mcp_smoke.pdf"
+    pdf_path.write_bytes(b"%PDF-1.4\n% smoke test placeholder\n")
+    return pdf_path.relative_to(REPO_ROOT).as_posix()
+
+
+def test_run_pdf_to_md_dry_run_allowed() -> None:
+    pdf_path = _write_smoke_pdf()
+    result = run_pdf_to_md(pdf_path)
+    assert result["converted"] is False
+    assert result["dry_run"] is True
+    assert result["input_path"] == pdf_path
+    assert result["output_path"] == "0_raw/extracted_md/mcp_smoke.md"
+    assert result["script_used"] == "scripts/pdf_to_md.py"
+
+
+def test_run_pdf_to_md_rejects_absolute_path() -> None:
+    try:
+        run_pdf_to_md(str(REPO_ROOT / "0_raw" / "blocked.pdf"))
+    except PathSafetyError:
+        return
+    raise AssertionError("absolute PDF input path was not rejected")
+
+
+def test_run_pdf_to_md_rejects_path_traversal() -> None:
+    try:
+        run_pdf_to_md("../0_raw/blocked.pdf")
+    except PathSafetyError:
+        return
+    raise AssertionError("PDF path traversal was not rejected")
+
+
+def test_run_pdf_to_md_rejects_git_path() -> None:
+    try:
+        run_pdf_to_md("0_raw/.git/blocked.pdf")
+    except PathSafetyError:
+        return
+    raise AssertionError(".git PDF path was not rejected")
+
+
+def test_run_pdf_to_md_rejects_non_pdf() -> None:
+    try:
+        run_pdf_to_md("0_raw/not_pdf.txt")
+    except ValueError:
+        return
+    raise AssertionError("non-PDF input was not rejected")
+
+
+def test_run_pdf_to_md_refuses_overwrite_by_default() -> None:
+    pdf_path = _write_smoke_pdf()
+    SMOKE_PDF_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    SMOKE_PDF_OUTPUT.write_text("existing", encoding="utf-8")
+    try:
+        run_pdf_to_md(pdf_path)
+    except FileExistsError:
+        return
+    raise AssertionError("existing extracted Markdown was not protected by overwrite=false")
+
+
 def _write_smoke_file(layer: str, name: str, content: str) -> str:
     smoke_dir = REPO_ROOT / layer / ".mcp_smoke"
     smoke_dir.mkdir(parents=True, exist_ok=True)
@@ -303,6 +367,12 @@ def run() -> None:
         test_create_from_template_rejects_absolute_path,
         test_create_from_template_refuses_overwrite_by_default,
         test_append_workflow_log_fixed_path,
+        test_run_pdf_to_md_dry_run_allowed,
+        test_run_pdf_to_md_rejects_absolute_path,
+        test_run_pdf_to_md_rejects_path_traversal,
+        test_run_pdf_to_md_rejects_git_path,
+        test_run_pdf_to_md_rejects_non_pdf,
+        test_run_pdf_to_md_refuses_overwrite_by_default,
         test_validate_layer_boundary_rejects_absolute_path,
         test_validate_layer_boundary_rejects_path_traversal,
         test_validate_layer_boundary_rejects_outside_repo,
@@ -315,6 +385,7 @@ def run() -> None:
         test_validate_synthesis_claims_flags_single_case_general_rule,
         test_validate_synthesis_claims_flags_strong_language,
     ]
+    original_pdf_output = SMOKE_PDF_OUTPUT.read_bytes() if SMOKE_PDF_OUTPUT.exists() else None
     try:
         for test in tests:
             test()
@@ -323,6 +394,10 @@ def run() -> None:
         for smoke_dir in SMOKE_DIRS:
             if smoke_dir.exists():
                 shutil.rmtree(smoke_dir)
+        if original_pdf_output is None:
+            SMOKE_PDF_OUTPUT.unlink(missing_ok=True)
+        else:
+            SMOKE_PDF_OUTPUT.write_bytes(original_pdf_output)
 
 
 if __name__ == "__main__":
