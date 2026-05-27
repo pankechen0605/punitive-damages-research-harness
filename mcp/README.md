@@ -5,9 +5,15 @@ research harness.
 
 The server exposes repository workflow documents, templates, and prompt files as
 MCP resources and prompts. It also provides deterministic status tools,
-PR-MCP-2 controlled write tools, and PR-MCP-3 heuristic validators that preserve
-the harness layer boundaries. PR-MCP-4 adds a controlled PDF text-extraction
-wrapper for raw-source machine-readable copies.
+PR-MCP-2 controlled write tools, PR-MCP-3 heuristic validators, and the
+PR-MCP-4 controlled PDF extraction wrapper. PR-MCP-5 closes MCP v1 with usage
+documentation, a tool catalog, and an end-to-end smoke test.
+
+## v1 Documentation
+
+- [MCP v1 integration guide](USAGE.md)
+- [MCP tool catalog](TOOL_CATALOG.md)
+- [MCP v1 completion note](V1_COMPLETION.md)
 
 ## What It Does
 
@@ -126,17 +132,17 @@ Example local stdio configuration:
 Use the same command/args shape in Claude Code or another MCP client that
 supports local stdio servers.
 
-## Smoke Check
+## Smoke Checks
 
-The smoke script does not require the MCP SDK. It verifies import safety,
-registry file existence, status keys, path traversal rejection, controlled
-template creation, overwrite refusal, `0_raw` rejection, absolute-path rejection,
-fixed-path workflow log append behavior, PR-MCP-3 validator heuristics, and
-PR-MCP-4 PDF wrapper guardrails:
+The smoke scripts do not require external services:
 
 ```powershell
 python mcp/smoke_test.py
+python mcp/smoke_v1.py
 ```
+
+`smoke_test.py` covers individual guardrails. `smoke_v1.py` exercises the MCP v1
+surface end to end without creating persistent research artifacts.
 
 ## Safety Boundaries
 
