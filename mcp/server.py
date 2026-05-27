@@ -22,6 +22,7 @@ from tools.write import (
     append_workflow_log as append_workflow_log_impl,
     create_from_template as create_from_template_impl,
 )
+from tools.pdf import run_pdf_to_md as run_pdf_to_md_impl
 from tools.validators import (
     validate_digest_card as validate_digest_card_impl,
     validate_layer_boundary as validate_layer_boundary_impl,
@@ -142,6 +143,20 @@ def create_server() -> Any:
         """Heuristically check synthesis claims for traceability and over-elevation."""
 
         return validate_synthesis_claims_impl(target_relative_path)
+
+    @app.tool()
+    def run_pdf_to_md(
+        input_relative_path: str,
+        overwrite: bool = False,
+        dry_run: bool = True,
+    ) -> dict[str, Any]:
+        """Extract text from a 0_raw PDF into 0_raw/extracted_md Markdown."""
+
+        return run_pdf_to_md_impl(
+            input_relative_path=input_relative_path,
+            overwrite=overwrite,
+            dry_run=dry_run,
+        )
 
     return app
 
