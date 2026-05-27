@@ -27,7 +27,7 @@ punitive-damages-research/
 │   ├── papers/                     ← 学术论文 / Academic Papers
 │   │   ├── pdf/                    ← PDF 原文 / Original PDFs
 │   │   ├── extracted_md/           ← 提取的 MD / Extracted Markdown
-│   │   └── notebook_exports/       ← NotebookLM 导出 / NotebookLM Exports
+│   │   └── notebook_exports/       ← 历史/归档导出 / Archived Notebook Exports
 │   └── metadata/                   ← 元数据 / Metadata
 │       └── source-index.md         ← 材料索引 / Source Index
 │
@@ -35,7 +35,7 @@ punitive-damages-research/
 │   ├── case_cards/                 ← 案例卡 / Case Cards
 │   ├── rule_cards/                 ← 规范卡 / Rule Cards
 │   ├── paper_cards/                ← 论文卡 / Paper Cards
-│   └── notebook_outputs/           ← NotebookLM 输出 / NotebookLM Outputs
+│   └── notebook_outputs/           ← 历史/归档中间输出 / Archived Notebook Outputs
 │
 ├── 2_framework/                    ← 跨材料观察框架层 / Cross-Source Framework Layer
 │   ├── normative_map/              ← 规范地图 / Normative Map
@@ -85,15 +85,15 @@ punitive-damages-research/
 - **只放原始材料或机器可读副本。**
 - PDF 原文永远是底本。
 - `extracted_md` 是为了 AI 读取方便而生成的机器可读副本，**不等同于最终摘要**。
-- `notebook_exports` 只允许放 NotebookLM 导出的"带来源定位的摘录或原文片段"。
-- **严禁把 AI 总结当成原始材料。** NotebookLM 生成的总结、问答、观点归纳不能放 raw，应放 `1_digest` 或 `2_framework`。
+- `notebook_exports` 仅作为历史/归档目录保留；当前流程不推荐继续依赖 NotebookLM 导出。
+- **严禁把 AI 总结当成原始材料。** 任何模型生成的总结、问答、观点归纳不能放 raw，应放 `1_digest` 或 `2_framework` 并标明来源和待核验状态。
 
 ### 1_digest — 单一材料消化层
 
 - `case_cards`：案例卡，回答"法院怎么判"。
 - `rule_cards`：规范卡或裁判规则锚点，回答"规则是什么"。
 - `paper_cards`：论文卡，回答"学界怎么看"。
-- `notebook_outputs`：NotebookLM 生成的中间输出，例如论文争议地图初稿、问题清单初稿。
+- `notebook_outputs`：历史/归档中间输出目录；当前推荐优先使用 MCP、模板和人工核验流程。
 - 权威案例与普通案例在 raw 层分类后，digest 层通过 `source_category` / `research_role` / rule anchor 继续保留其不同研究功能。详见 [docs/case-digest-routing.md](docs/case-digest-routing.md)。
 
 ### 2_framework — 跨材料观察框架层
@@ -125,17 +125,25 @@ punitive-damages-research/
 - 检查案例卡是否存在遗漏、矛盾、无来源推断
 - **不联网、不补充外部信息、不编造案例**
 
-### NotebookLM
+### NotebookLM（历史/可选）
 
-- 根据上传的 CSSCI 论文整理**学术争议地图**
-- 生成论文问题清单、概念框架
-- **输出放入 `1_digest/notebook_outputs` 或 `2_framework`，不放入 `0_raw`**
+- 上一轮实践中发现 NotebookLM 不适合作为当前主线工具。
+- 相关目录仅作为历史输出或可选实验空间保留。
+- 当前推荐优先使用 MCP v1、固定模板、smoke tests 和人工核验来推进研究流程。
 
 ### PDF-to-MD 脚本
 
 - 将 PDF 论文转为 Markdown，保留页码和段落
 - 输出放入 `0_raw/papers/extracted_md/`
 - **只是机器可读副本，不是最终摘要**
+
+### MCP v1（本地工作流控制器）
+
+- 暴露项目文档、模板和 prompts 给 MCP 客户端读取
+- 提供项目状态检查、前置条件检查、受控模板创建、workflow log 追加和层级边界验证
+- 支持 `run_pdf_to_md` 的 dry-run-first 机械提取流程
+- **不生成法律结论、不联网、不调用 LLM API、不替代人工核验**
+- 详见 [mcp/README.md](mcp/README.md)、[mcp/USAGE.md](mcp/USAGE.md)、[mcp/TOOL_CATALOG.md](mcp/TOOL_CATALOG.md)
 
 ### 人工（你）
 
