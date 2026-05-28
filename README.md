@@ -4,6 +4,8 @@
 
 搭建一个可复用的法律研究管线，用于把"原始法律材料"逐步转化为结构化的案例卡、规范卡、论文卡、学术争议地图、裁判观察要素表、横向比较表、文档版 pre 材料，以及后续可复用的法律案例分析 workflow。
 
+本仓库新增 **可追溯法律研究组装框架 v0.1**，作为五层目录之上的通用方法层。它用于增强来源追溯、结论边界控制、研究零件复用和跨主题迁移；当前生态环境惩罚性赔偿是一个试验主题，后续可迁移至 BEPS、Temu/PDD 双支柱、数据合规、平台合规、游戏合规等研究项目。详见 [docs/可追溯法律研究组装框架-v0.1.md](docs/可追溯法律研究组装框架-v0.1.md)。
+
 ---
 
 ## 分层结构 / Layered Structure
@@ -183,6 +185,11 @@ punitive-damages-research/
 
 - Agent 操作规则见 [AGENTS.md](AGENTS.md)。
 - 固定运行流程见 [docs/canonical-operating-flow.md](docs/canonical-operating-flow.md)。
+- 可追溯法律研究组装框架见 [docs/可追溯法律研究组装框架-v0.1.md](docs/可追溯法律研究组装框架-v0.1.md)。
+- 研究对象模型见 [docs/研究对象模型.md](docs/研究对象模型.md)。
+- 研究组装操作规则见 [docs/研究组装操作规则.md](docs/研究组装操作规则.md)。
+- 质量评价模型见 [docs/质量评价模型.md](docs/质量评价模型.md)。
+- 法律研究工作流设计清单见 [docs/法律研究工作流设计清单.md](docs/法律研究工作流设计清单.md)。
 - 详细层级契约见 [docs/layer-contracts.md](docs/layer-contracts.md)。
 - 材料路由规则见 [docs/material-routing-rules.md](docs/material-routing-rules.md)。
 - raw 层边界见 [docs/raw-layer-guide.md](docs/raw-layer-guide.md)。
