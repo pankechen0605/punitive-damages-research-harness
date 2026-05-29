@@ -186,6 +186,10 @@ punitive-damages-research/
 - Agent 操作规则见 [AGENTS.md](AGENTS.md)。
 - 固定运行流程见 [docs/canonical-operating-flow.md](docs/canonical-operating-flow.md)。
 - 可追溯法律研究组装框架见 [docs/可追溯法律研究组装框架-v0.1.md](docs/可追溯法律研究组装框架-v0.1.md)。
+- TARA 双案例试跑见 [2_framework/tara_pilot/00_README.md](2_framework/tara_pilot/00_README.md)。
+- TARA pilot validator：`python scripts/validate_tara_pilot.py`。
+- 迁移到新主题指南见 [docs/迁移到新主题指南.md](docs/迁移到新主题指南.md)。
+- Temu/PDD 双支柱迁移说明见 [docs/Temu-PDD双支柱迁移说明.md](docs/Temu-PDD双支柱迁移说明.md)。
 - 研究对象模型见 [docs/研究对象模型.md](docs/研究对象模型.md)。
 - 研究组装操作规则见 [docs/研究组装操作规则.md](docs/研究组装操作规则.md)。
 - 质量评价模型见 [docs/质量评价模型.md](docs/质量评价模型.md)。

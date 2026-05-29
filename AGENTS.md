@@ -110,6 +110,14 @@ activate topic config
 - 没有 human sign-off 的 final legal conclusion。
 - output 层新增、删改或强化 synthesis 结论。
 
+处理 TARA pilot 文件时，完成前必须运行：
+
+```text
+python scripts/validate_tara_pilot.py
+```
+
+`PASS_WITH_WARNINGS` 只能说明方法论试跑结构可检查，不代表可以进入最终法律结论。涉及缺少 raw evidence、待核验项或过强表述的 warnings，必须在 completion report 中披露。
+
 ## Agent 允许做什么
 
 ### Codex
